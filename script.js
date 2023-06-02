@@ -84,44 +84,32 @@ const fruit = [
 ];
 
 function search(str) {
-  let results = [];
-  const inputVal = str.toLowerCase();
-
-  for (let i = 0; i < fruit.length; i++) {
-    const fruitName = fruit[i].toLowerCase();
-    if (fruitName.includes(inputVal)) {
-      //add matching fruits to the results list
-      results.push(fruit[i]);
-    }
-  }
-
-  return results;
+  return fruit.filter((fruitName) =>
+    fruitName.toLocaleLowerCase().includes(str.toLowerCase())
+  );
 }
 
 function searchHandler(e) {
-  const inputVal = e.target.value; // get current value of the input field
-  const results = search(inputVal); // calls the search function to get matching fruits
-  showSuggestions(results, inputVal); // display the suggestion in the dropdown
+  const inputVal = e.target.value;
+  const results = search(inputVal);
+  showSuggestions(results, inputVal);
 }
 
-function showSuggestions(results, inputVal) {
-  // clear the existing suggestions
+function showSuggestions(results) {
   suggestions.innerHTML = "";
 
   for (let i = 0; i < results.length; i++) {
-    const suggestion = document.createElement("li"); // creates a new li element
-    suggestion.textContent = results[i]; //set the text content of the li to the fruit name
-    suggestions.appendChild(suggestion); // add the suggestion to the dropdown
+    const suggestion = document.createElement("li");
+    suggestion.textContent = results[i];
+    suggestions.appendChild(suggestion);
   }
 }
 
 function useSuggestion(e) {
-  const selectedSuggestion = e.target.textContent; // get the selected suggestion from the clicked li
-  input.value = selectedSuggestion; // set the input field value to the selected suggestion
-  suggestions.innerHTML = ""; // clears the dropdown
+  input.value = e.target.textContent;
+  suggestions.innerHTML = "";
 }
 
-// clears the input field with a double click after making a selection
 function clearInputField(e) {
   if (e.type === "dblclick") {
     input.value = "";
@@ -129,5 +117,5 @@ function clearInputField(e) {
 }
 
 input.addEventListener("keyup", searchHandler);
-suggestions.addEventListener("click", useSuggestion); // adds the selected item to the input field
+suggestions.addEventListener("click", useSuggestion);
 input.addEventListener("dblclick", clearInputField);
