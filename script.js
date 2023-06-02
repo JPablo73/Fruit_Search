@@ -98,11 +98,11 @@ function searchHandler(e) {
 function showSuggestions(results) {
   suggestions.innerHTML = "";
 
-  for (let i = 0; i < results.length; i++) {
+  results.forEach((result) => {
     const suggestion = document.createElement("li");
-    suggestion.textContent = results[i];
+    suggestion.textContent = result;
     suggestions.appendChild(suggestion);
-  }
+  });
 }
 
 function useSuggestion(e) {
